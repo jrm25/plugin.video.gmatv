@@ -2,8 +2,7 @@
 [![GitHub release](https://img.shields.io/github/v/release/cmik/plugin.video.gmatv.svg)](https://github.com/cmik/plugin.video.gmatv/releases)
 
 ## GMA.tv add-on
-Enjoy full episodes of GMA Network shows for free! GMA videos are mostly hosted on Youtube and access to content may vary according to your country. This add-on requires plugin.video.youtube to work. 
-This is not an official GMA Network add-on. This uses GMANetwork.com website content
+Enjoy full episodes of GMA Network shows for free! GMA videos are mostly hosted on Youtube and access to content may vary according to your country. This add-on requires plugin.video.youtube to work. This is not an official GMA Network add-on. This uses GMANetwork.com website content
 
 
 **REPO:**
