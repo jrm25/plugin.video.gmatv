@@ -1,5 +1,7 @@
+[![Kodi version](https://img.shields.io/badge/kodi%20versions-16+-blue)](https://kodi.tv/)
+
 ## GMA.tv add-on
-Enjoy full episodes of GMA Network shows for free!
+Enjoy full episodes of GMA Network shows for free! GMA videos are mostly hosted on Youtube and access to content may vary according to your country. This add-on requires plugin.video.youtube to work.
 This is not an official GMA Network add-on. This uses GMANetwork.com website content.
 
 
