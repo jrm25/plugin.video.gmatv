@@ -75,7 +75,7 @@ See also:
 
 
 ### You've found a bug. How can I report it?
-If you encounter anything that you think is a bug, please report it to the add-on github repo (https://github.com/cmik/cmik.xbmc/issues). 
+If you encounter anything that you think is a bug, please report it to the add-on github repo (https://github.com/cmik/plugin.video.gmatv/issues). 
 Do not hesitate to give more details about your issue: 
 >- your device & plateform version
 >- your add-on version
