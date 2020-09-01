@@ -56,13 +56,6 @@ See also:
 >[How to update your add-on (wiki)](http://kodi.wiki/view/Add-on_manager#Updating)
 
 
-### I can't play a movie, episode or a live stream
->- Check your internet connection
->- Check that you have enabled the Streaming Proxy in the add-on advanced settings (reboot Kodi after any modification)
->- If you have a message "The streaming proxy is not active...". Please reboot your Kodi system.
->- A notification message will normally appear when you play this type of content.
-
-
 ### How can I export my GMA.tv shows in my Kodi library (export .strm and .nfo files)
 >1. In the add-on general settings > Export to Library > set enable context menu to ON.
 >2. Choose your personnal export path or leave it blank (it will export in the addon userdata folder by default)
@@ -70,7 +63,7 @@ See also:
 >4. Set the Automatic update to ON.
 >5. Reboot your Kodi
 >6. You can now export a show from the context menu when you are on a show list.
->7. Exit the add-on and go to Videos > Add videos... > select your "library" folder or by default the Kodi userdata directory (ex: ".../userdata/addon_data/plugin.video.tfctv/library").
+>7. Exit the add-on and go to Videos > Add videos... > select your "library" folder or by default the Kodi userdata directory (ex: ".../userdata/addon_data/plugin.video.gmatv/library").
 [Click here](https://kodi.wiki/view/Userdata) to know the userdata directory path according to your operating system.
 >7. The add-on will only export .strm and .nfo files but you will have to execute a new content check for Kodi to add new contents to its library. You can also install the add-on "Library Auto Updater" from the Kodi repository to schedule an automatic update.
 
