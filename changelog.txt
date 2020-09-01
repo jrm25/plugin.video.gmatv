@@ -1,2 +1,6 @@
+0.2.0
+    Repo has been removed from addon.xml to avoid multiple repo for the same add-ons
+    To keep your add-on up to date, install Cmik Repo from https://repo.cmik.me/repository/
+    Some fixes and optimizations
 0.1.0
     First pre-release version of GMA.tv add-on

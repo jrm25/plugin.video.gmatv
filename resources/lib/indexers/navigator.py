@@ -40,10 +40,7 @@ thisPlugin = int(sys.argv[1])
 
 class navigator:
 
-    def root(self):
-        if control.setting('useProxy') == 'true':
-            gmatv.checkProxy()
-            
+    def root(self):            
         self.showMainMenu()
     
     def showMainMenu(self):

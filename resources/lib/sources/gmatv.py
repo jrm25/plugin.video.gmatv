@@ -58,76 +58,6 @@ def playEpisode(id, name, thumbnail, bandwidth=False):
         except: 
             control.showNotification(control.lang(57032), control.lang(50004))
     return False
-
-# def playEpisode(url, name, thumbnail, bandwidth=False):
-#     logger.logInfo('called function')
-#     errorCode = -1
-#     episodeDetails = {}
-#     episode = url.split('/')[0]
-    
-#     if checkProxy() == True:                
-#         episodeDetails = getMediaInfo(episode, name, thumbnail, bandwidth)
-#         logger.logDebug(episodeDetails)
-#         if episodeDetails and 'errorCode' in episodeDetails and episodeDetails['errorCode'] == 0 and 'data' in episodeDetails:
-#             if 'preview' in episodeDetails['data'] and episodeDetails['data']['preview'] == True:
-#                 control.infoDialog(control.lang(57025), control.lang(50002), time=5000)
-#             elif 'StatusMessage' in episodeDetails and episodeDetails['StatusMessage'] != '':
-#                 control.showNotification(episodeDetails['StatusMessage'], control.lang(50009))
-#             url = control.setting('proxyStreamingUrl') % (control.setting('proxyHost'), control.setting('proxyPort'), urllib.quote(episodeDetails['data']['uri'])) if not episodeDetails.get('useDash', False) and (control.setting('useProxy') == 'true') else episodeDetails['data']['uri']
-#             liz = control.item(name, path=url+'|User-Agent=%s' % (config.userAgents['default']), thumbnailImage=thumbnail, iconImage="DefaultVideo.png")
-#             liz.setInfo(type='video', infoLabels={
-#                 'title': name, 
-#                 'sorttitle' : episodeDetails['data']['dateaired'],
-#                 'tvshowtitle' : episodeDetails['data']['show'],
-#                 'genre' : episodeDetails['data']['parentname'],
-#                 'episode' : episodeDetails['data']['episodenumber'],
-#                 'tracknumber' : episodeDetails['data']['episodenumber'],
-#                 'plot' : episodeDetails['data']['plot'],
-#                 'aired' : episodeDetails['data']['dateaired'],
-#                 'year' : episodeDetails['data']['year'],
-#                 'mediatype' : episodeDetails['data']['ltype'] 
-#                 })
-
-#             # Add eventual subtitles
-#             if 'track' in episodeDetails['data'] and len(episodeDetails['data']['track']) and 'src' in episodeDetails['data']['track'][0]:
-#                 try: 
-#                     liz.setSubtitles([episodeDetails['data']['track'][0]['src']])
-#                     if 'srclang' in episodeDetails['data']['track'][0]: liz.addStreamInfo('subtitle', {'language' : episodeDetails['data']['track'][0]['srclang']})
-#                 except: pass
-
-#             if episodeDetails.get('useDash', False):
-#                 logger.logDebug(episodeDetails['dash'])
-                
-#                 protocol = 'mpd'
-#                 drm = episodeDetails['dash']['type']
-#                 license_server = episodeDetails['dash']['key']
-#                 headers = episodeDetails['dash']['headers']
-#                 license_key = logger.logDebug('%s|%s|%s|%s' % (license_server, headers, 'R{SSM}', ''))
-
-#                 is_helper = inputstreamhelper.Helper(protocol, drm=drm)
-#                 is_helper.check_inputstream()
-#                 liz.setProperty('inputstreamaddon', 'inputstream.adaptive')
-#                 liz.setProperty('inputstream.adaptive.manifest_type', protocol)
-#                 liz.setProperty('inputstream.adaptive.license_type', drm)
-#                 liz.setProperty('inputstream.adaptive.stream_headers','Origin=%s&Referer=%s&User-Agent=%s&cache-control=no-cache&pragma=no-cache&sec-fetch-mode=cors&sec-fetch-site=cross-site' % (config.websiteUrl, config.websiteUrl+'/', config.userAgents['default']))
-#                 # liz.setProperty('inputstream.adaptive.license_data', '')
-#                 liz.setProperty('inputstream.adaptive.license_key', license_key)
-#                 liz.setMimeType(episodeDetails['data']['type'])
-#                 liz.setContentLookup(False)
-            
-#             liz.setProperty('fanart_image', episodeDetails['data']['fanart'])
-#             liz.setProperty('IsPlayable', 'true')
-#             try: 
-#                 return control.resolve(thisPlugin, True, liz)
-#             except: 
-#                 control.showNotification(control.lang(57032), control.lang(50004))
-#         elif (not episodeDetails) or (episodeDetails and 'errorCode' in episodeDetails and episodeDetails['errorCode'] != 0):
-#             logger.logNotice(episodeDetails['StatusMessage'])
-#             if 'StatusMessage' in episodeDetails:
-#                 control.showNotification(episodeDetails['StatusMessage'], control.lang(50004))
-#             else:
-#                 control.showNotification(control.lang(57001), control.lang(50009))
-#     return False
     
 def getMediaInfo(episodeId, title, thumbnail, bandwidth=False):
     logger.logInfo('called function')
@@ -138,20 +68,6 @@ def getMediaInfo(episodeId, title, thumbnail, bandwidth=False):
         episode = res[0] 
         res = showDB.get(episode.get('parentid'))
         show = res[0] if len(res) == 1 else {}
-
-        # Parental advisory
-        # mediaInfo['data']['parentalAdvisory'] = 'false'
-        # if re.compile('var dfp_c = ".*2900.*";', re.IGNORECASE).search(html):
-        #     mediaInfo['data']['parentalAdvisory'] = 'true'
-        #     if control.setting('parentalAdvisoryCheck') == 'true':
-        #         control.alert(control.lang(57011),title=control.lang(50003))
-        #     if control.setting('parentalControl') == 'true':
-        #         code = control.numpad(control.lang(57021))
-        #         if code != control.setting('parentalCode'):
-        #             mediaInfo['StatusMessage'] = control.lang(57022)
-        #             mediaInfo['errorCode'] = 3
-        #             mediaInfo['data'] = {}
-        #             return mediaInfo
         
         mediaInfo['data'] = {}
         mediaInfo['data']['parentalAdvisory'] = False
@@ -1217,10 +1133,6 @@ def callServiceApi(path, params={}, headers=[], base_url=config.websiteUrl, useC
     res = {}
     cached = False
     toCache = False
-    
-    gzipped = False
-    if ".gz" in path:
-        gzipped = True
 
     # No cache if full response required
     if returnMessage == False:
@@ -1240,14 +1152,10 @@ def callServiceApi(path, params={}, headers=[], base_url=config.websiteUrl, useC
             logger.logInfo('Used cache for (%s)' % key)
     
     if cached is False:
-        if gzipped is True:
-            from StringIO import StringIO
-            import gzip
-
         opener = urllib2.build_opener(urllib2.HTTPRedirectHandler(), urllib2.HTTPCookieProcessor(cookieJar))
         userAgent = config.userAgents[base_url] if base_url in config.userAgents else config.userAgents['default']
         headers.append(('User-Agent', userAgent))
-        if gzipped is True: headers.append(('Accept-encoding', 'gzip'))
+        headers.append(('Accept-encoding', 'gzip'))
         opener.addheaders = headers
         logger.logDebug('### Request headers, URL & params ###')
         logger.logDebug(headers)
@@ -1273,6 +1181,8 @@ def callServiceApi(path, params={}, headers=[], base_url=config.websiteUrl, useC
             logger.logDebug(response.info())
             logger.logDebug('### Response ###')
             if response.info().get('Content-Encoding') == 'gzip':
+                from StringIO import StringIO
+                import gzip
                 buf = StringIO(response.read())
                 f = gzip.GzipFile(fileobj=buf)
                 res['message'] = f.read()
@@ -1316,16 +1226,6 @@ def callJsonApi(path, params={}, headers=[('X-Requested-With', 'XMLHttpRequest')
     except:
         pass
     return data
-    
-def checkProxy():
-    if (control.setting('useProxy') == 'true'):
-        url = control.setting('proxyCheckUrl') % (control.setting('proxyHost'), control.setting('proxyPort'))
-        response = callServiceApi(url, base_url = '', useCache=False, returnMessage=False)
-        logger.logDebug(response)
-        if response.get('status', '') != 200:
-            control.alert(control.lang(57028), title=control.lang(50004))
-            return False
-    return True
             
 # This function is a workaround to fix an issue on cookies conflict between live stream and shows episodes
 def cleanCookies(notify=True):

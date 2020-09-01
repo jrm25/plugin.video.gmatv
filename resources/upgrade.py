@@ -18,7 +18,7 @@ def upgradeDB():
 
     logger.logNotice('Updating from version %s to %s' % (control.setting('lastVersion'), control.addonInfo('version')))
 
-    if control.setting('lastVersion') in ('', '0.1.0', '0.2.0'):
+    if control.setting('lastVersion') in (''):
         # Check if installation is complete
         logger.logNotice('Checking installation')
         tools.checkInstallDB(True)

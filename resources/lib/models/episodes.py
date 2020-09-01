@@ -117,7 +117,7 @@ class Episode(model.Model):
             RATING, \
             VOTES \
             FROM EPISODE \
-            WHERE %s IN (%s)" % (key, ','.join(str(v) for v in mixed))))
+            WHERE %s IN (%s)" % (key, ','.join("'%s'" % str(v) for v in mixed))))
         return logger.logDebug(dbcur.fetchall())
 
         
